@@ -47,7 +47,8 @@ def swap_k(L, k):
     >>> nums
     [5, 6, 3, 4, 1, 2]
     """
-    L[0:k], L[-k:] = L[-k:], L[0:k]
+    if k > 0:
+        L[0:k], L[-k:] = L[-k:], L[0:k]
 
 
 if __name__ == '__main__':

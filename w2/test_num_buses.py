@@ -6,14 +6,14 @@ class TestNumBuses(unittest.TestCase):
     """ Test class for function a1.num_buses. """
 
     # Add your test methods for a1.num_buses here.
-    def test_for_zero(self,):
+    def test_for_zero(self):
         """Test num_buses with 0 people."""
 
         act = a1.num_buses(0)
         exp = 0
         self.assertEqual(act, exp)
         
-    def test_for_one(self,):
+    def test_for_one(self):
         """Test num_buses with 1 people."""
 
         act = a1.num_buses(1)

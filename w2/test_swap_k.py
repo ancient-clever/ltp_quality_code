@@ -13,7 +13,7 @@ class TestSwapK(unittest.TestCase):
         k = 0 
         list_1_expected = [1, 2, 3, 4, 5, 6]
         
-        a1.swap_k(list_1,k)
+        a1.swap_k(list_1, k)
 
         self.assertEqual(list_1, list_1_expected)
  
@@ -25,7 +25,7 @@ class TestSwapK(unittest.TestCase):
         k = 1 
         list_1_expected = [6, 2, 3, 4, 5, 1]
         
-        a1.swap_k(list_1,k)
+        a1.swap_k(list_1, k)
 
         self.assertEqual(list_1, list_1_expected)
 
@@ -46,9 +46,9 @@ class TestSwapK(unittest.TestCase):
         """Test swap_k with k equals the max possible value,
         when length of list is odd."""
  
-        list_2 = [1,2,3,4,5]
+        list_2 = [1, 2, 3, 4, 5]
         k = len(list_2)//2
-        list_2_expected = [4, 5, 3, 1 ,2]
+        list_2_expected = [4, 5, 3, 1, 2]
 
         a1.swap_k(list_2, k)
         

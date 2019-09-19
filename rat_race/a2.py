@@ -127,7 +127,12 @@ class Maze:
         self.maze = maze
         self.rat_1 = rat_1
         self.rat_2 = rat_2
-        self.num_sprouts_left = 0
+        
+        num_sprouts_left = 0 
+        for i in range(len(maze)):
+            num_sprouts_left += maze[i].count(SPROUT)
+
+        self.num_sprouts_left = num_sprouts_left
 
     def is_wall(self, row, col):
         """ (Maze, int, int) -> bool
@@ -141,38 +146,57 @@ class Maze:
         """ (Maze, int, int) -> int
         Return the character in the maze at the given row and column.
         """
-        if self.rat_1.row == row and self.rat_1.col == col:
+        if (self.rat_1.row, self.rat_1.col) == (row, col):
             return self.rat_1.symbol
-        if self.rat_2.row == row and self.rat_2.col == col:
+        if (self.rat_2.row, self.rat_2.col) == (row, col):
             return self.rat_2.symbol
+
+        return self.maze[row][col]
         
         return self.maze[row][col]
 
-    def move(self, rat, row, col):
+    def move(self, rat, row_move, col_move):
         """ (Maze, Rat, int, int) -> NoneType
 
         Move the rat in the given direction, unless there is a wall in the way.
         Return True if and only if there wasn't a wall in the way.
         """
 
-        if self.is_wall(rat.row+row,rat.col+col):
+        old_row = rat.row
+        old_col = rat.col
+
+        new_row = old_row + row_move
+        new_col = old_col + col_move
+
+        target = self.get_character(new_row, new_col)
+
+        if target == WALL:
             return False
-        if self.get_character(rat.row+row,rat.col+col) == SPROUT:
-            rat.eat_sprout()
-            self.num_sprouts_left -= 1
-            self.maze[rat.row+row][rat.col+col] = HALL
-        rat.set_location(rat.row+row,rat.col+col)
-        
+        if target == HALL:
+            rat.set_location(new_row, new_col) 
+        elif target == SPROUT:
+            rat.set_location(new_row, new_col) 
+            rat.eat_sprout()                   
+            self.num_sprouts_left -= 1         
+            self.maze[new_row][new_col] = HALL 
         return True
+    
 
     def __str__(self):
         """ (Maze) -> str
         Return a string representation of the Maze
         """
-        maze = "\n".join(["".join(row)  for row in self.maze])
-        maze += "\n"
-        maze += str(self.rat_1)
-        maze += "\n"
-        maze += str(self.rat_2)
-        return maze
+        s = ''
+        
+        m = self.maze
+        m[self.rat_1.row][self.rat_1.col] = self.rat_1.symbol
+        m[self.rat_2.row][self.rat_2.col] = self.rat_2.symbol
+
+        for i in range(len(m)):
+            for j in range(len(m[i])):
+                s = s + m[i][j]
+            s = s + '\n'
+
+        s = s + str(self.rat_1) + '\n' + str(self.rat_2)
+        return s
 
